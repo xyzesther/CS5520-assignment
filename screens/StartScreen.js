@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { View, StyleSheet, Text, TextInput, Alert, Button } from 'react-native'
 import { CheckBox } from 'react-native-elements'
 
-function StartScreen({ onRegister }) {
+export default function StartScreen({ onRegister }) {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
@@ -10,8 +10,8 @@ function StartScreen({ onRegister }) {
   const [errorMsg, setErrorMsg] = useState({name: '', email: '', phoneNumber: ''});
 
   const validateName = (name) => {
-    if (!name || name.length < 2 || name.isNaN()) {
-      return 'Please enter a valid name (non-numeric, at least 2 characters)';
+    if (!name || name.length < 2 || !isNaN(name)) {
+      return 'Please enter a valid name';
     }
     return '';
   }
@@ -24,20 +24,28 @@ function StartScreen({ onRegister }) {
   }
 
   const validatePhoneNumber = (phoneNumber) => {
-    if (!phoneNumber || phoneNumber.length < 10 
-       || phoneNumber.length > 10 || phoneNumber.indexOF('0') !== 10 
-       || phoneNumber.indexOF('1') !== 10) {
-      return 'Please enter a valid phone number (10 numerical characters)';
+    const lastDigit = phoneNumber.charAt(phoneNumber.length - 1);
+
+    if (!phoneNumber || phoneNumber.length !== 10 
+        || lastDigit === '1' || lastDigit === '0') {
+      return 'Please enter a valid phone number';
     }
     return '';
   }
 
-  const validateForm = () => {
-    const nameError = validateName(name);
-    const emailError = validateEmail(email);
-    const phoneNumberError = validatePhoneNumber(phoneNumber);
-    setErrorMsg({name: nameError, email: emailError, phoneNumber: phoneNumberError});
-    return !nameError && !emailError && !phoneNumberError;
+  const handleNameChange = (name) => {
+    setName(name);
+    setErrorMsg({...errorMsg, name: validateName(name)});
+  }
+
+  const handleEmailChange = (email) => {
+    setEmail(email);
+    setErrorMsg({...errorMsg, email: validateEmail(email)});
+  }
+
+  const handlePhoneNumberChange = (phoneNumber) => {
+    setPhoneNumber(phoneNumber);
+    setErrorMsg({...errorMsg, phoneNumber: validatePhoneNumber(phoneNumber)});
   }
 
   const handleCheckBox = () => {
@@ -45,7 +53,7 @@ function StartScreen({ onRegister }) {
   }
 
   const handleRegister = () => {
-    if (validateForm()) {
+    if (!errorMsg.name && !errorMsg.email && !errorMsg.phoneNumber) {
       onRegister({ name, email, phoneNumber });
     } else {
       Alert.alert('Invalid input', 'Please check your input', [{text: 'OK'}]);
@@ -67,7 +75,7 @@ function StartScreen({ onRegister }) {
         <TextInput 
           style={styles.input}
           value={name}
-          onChangeText={setName}
+          onChangeText={handleNameChange}
         />
         {errorMsg.name ? <Text style={styles.errorMsg}>{errorMsg.name}</Text> : null}
 
@@ -75,7 +83,7 @@ function StartScreen({ onRegister }) {
         <TextInput 
           style={styles.input}
           value={email}
-          onChangeText={setEmail}
+          onChangeText={handleEmailChange}
           keyboardType="email-address"
         />
         {errorMsg.email ? <Text style={styles.errorMsg}>{errorMsg.email}</Text> : null}
@@ -84,7 +92,7 @@ function StartScreen({ onRegister }) {
         <TextInput 
           style={styles.input}
           value={phoneNumber}
-          onChangeText={setPhoneNumber}
+          onChangeText={handlePhoneNumberChange}
           keyboardType="numeric"
         />
         {errorMsg.phoneNumber ? <Text style={styles.errorMsg}>{errorMsg.phoneNumber}</Text> : null}
@@ -146,13 +154,13 @@ const styles = StyleSheet.create({
   input: {
     borderBottomColor: "blue",
     borderBottomWidth: 2,
-    marginBottom: 20,
+    marginBottom: 10,
   },
 
   errorMsg: {
     color: 'red',
     fontSize: 12,
-    marginTop: 5,
+    marginBottom: 5,
   },
 
   checkboxContainer: {
@@ -174,5 +182,3 @@ const styles = StyleSheet.create({
     borderColor: 'blue',
   },
 });
-
-export default StartScreen
