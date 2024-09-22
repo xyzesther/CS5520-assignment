@@ -14,6 +14,7 @@ export default function App() {
 
   return (
     <SafeAreaView style={styles.container}>
+      <StatusBar style="auto" />
       {currentScreen === 'StartScreen' && (
         <StartScreen onRegister={handleRegister} />
       )}
