@@ -40,6 +40,10 @@ function StartScreen({ onRegister }) {
     return !nameError && !emailError && !phoneNumberError;
   }
 
+  const handleCheckBox = () => {
+    setIsCheckBoxChecked(!isCheckBoxChecked);
+  }
+
   const handleRegister = () => {
     if (validateForm()) {
       onRegister({ name, email, phoneNumber });
@@ -87,8 +91,11 @@ function StartScreen({ onRegister }) {
       
         <View style={styles.checkboxContainer}>
           <CheckBox 
-            value={isCheckBoxChecked}
-            onValueChange={setIsCheckBoxChecked}
+            checked={isCheckBoxChecked}
+            onPress={handleCheckBox}
+            iconType="material-community"
+            checkedIcon="checkbox-outline"
+            uncheckedIcon="checkbox-blank-outline"
           />
           <Text>I am not a robot</Text>
         </View>
@@ -133,6 +140,7 @@ const styles = StyleSheet.create({
     color: "blue",
     fontSize: 16,
     marginBottom: 5,
+    marginTop: 10,
   },
 
   input: {
@@ -150,6 +158,7 @@ const styles = StyleSheet.create({
   checkboxContainer: {
     flexDirection: 'row',
     alignItems: 'center',
+    paddingRight: 0,
     marginBottom: 10,
   },
 
