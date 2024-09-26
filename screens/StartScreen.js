@@ -9,21 +9,21 @@ export default function StartScreen({ onRegister }) {
   const [isCheckBoxChecked, setIsCheckBoxChecked] = useState(false);
   const [errorMsg, setErrorMsg] = useState({name: '', email: '', phoneNumber: ''});
 
-  const validateName = (name) => {
+  function validateName(name) {
     if (!name || name.length < 2 || !isNaN(name)) {
       return 'Please enter a valid name';
     }
     return '';
   }
 
-  const validateEmail = (email) => {
+  function validateEmail(email) {
     if (!email || !email.includes('@')) {
       return 'Please enter a valid email address';
     }
     return '';
   }
 
-  const validatePhoneNumber = (phoneNumber) => {
+  function validatePhoneNumber(phoneNumber) {
     const lastDigit = phoneNumber.charAt(phoneNumber.length - 1);
 
     if (!phoneNumber || phoneNumber.length !== 10 
@@ -33,26 +33,26 @@ export default function StartScreen({ onRegister }) {
     return '';
   }
 
-  const handleNameChange = (name) => {
+  function handleNameChange(name) {
     setName(name);
     setErrorMsg({...errorMsg, name: validateName(name)});
   }
 
-  const handleEmailChange = (email) => {
+  function handleEmailChange(email) {
     setEmail(email);
     setErrorMsg({...errorMsg, email: validateEmail(email)});
   }
 
-  const handlePhoneNumberChange = (phoneNumber) => {
+  function handlePhoneNumberChange(phoneNumber) {
     setPhoneNumber(phoneNumber);
     setErrorMsg({...errorMsg, phoneNumber: validatePhoneNumber(phoneNumber)});
   }
 
-  const handleCheckBox = () => {
+  function handleCheckBox() {
     setIsCheckBoxChecked(!isCheckBoxChecked);
   }
 
-  const handleRegister = () => {
+  function handleRegister() {
     if (!errorMsg.name && !errorMsg.email && !errorMsg.phoneNumber) {
       onRegister({ name, email, phoneNumber });
     } else {
@@ -60,7 +60,7 @@ export default function StartScreen({ onRegister }) {
     }
   }
 
-  const handleReset = () => {
+  function handleReset() {
     setName('');
     setEmail('');
     setPhoneNumber('');
