@@ -43,7 +43,9 @@ export default function App() {
         />
       )}
       {currentScreen === 'GameScreen' && (
-        <GameScreen />
+        <GameScreen 
+          phoneNumber={phoneNumber}
+        />
       )}
     </SafeAreaView>
   );
