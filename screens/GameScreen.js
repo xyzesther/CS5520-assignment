@@ -9,6 +9,7 @@ export default function GameScreen({ phoneNumber, onRestart }) {
   const [timeLeft, setTimeLeft] = useState(60);
   const [currentGuess, setCurrentGuess] = useState('');
   const [hintUsed, setHintUsed] = useState(false);
+  const [feedback, setFeedback] = useState('');
 
   const lastDigit = phoneNumber[phoneNumber.length - 1];
   
@@ -34,6 +35,31 @@ export default function GameScreen({ phoneNumber, onRestart }) {
       setHintUsed(true);
       Alert.alert(`Hint: The target number is a multiple of ${lastDigit}`);
     }
+  }
+
+  function handleGuess() {
+    const guess = parseInt(currentGuess);
+    
+    // Check if the guess is a valid number
+    if (isNaN(guess) || guess < 1 || guess > 100) {
+      Alert.alert('Invalid input', 'Please enter a number between 1 and 100', [{ text: 'OK' }]);
+      return;
+    }
+
+    // Check if the guess is the target number
+    if (guess === currentTarget) {
+      setFeedback(`You guessed correct! Attempts Used: ${4 - attemptsLeft + 1}`);
+    } else {
+      setAttemptsLeft((prevAttemptLeft) => prevAttemptLeft - 1);
+      const guessDirection = guess < currentTarget ? 'higher' : 'lower';
+      setFeedback(`You did not guess correct! You should guess ${guessDirection}`);
+      
+      if (attemptsLeft === 1) {
+        setFeedback('Game Over!');
+      }
+    }
+
+    setCurrentGuess('');
   }
 
 
@@ -62,6 +88,7 @@ export default function GameScreen({ phoneNumber, onRestart }) {
             keyboardType="numeric"
           />
           <Button title="Use a hint" onPress={useHint} disabled={hintUsed} />
+          <Button title="Submit" onPress={handleGuess} />
         </View>
       )}
     </View>
