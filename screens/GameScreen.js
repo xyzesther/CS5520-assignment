@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { Alert, StyleSheet, Text, View, TextInput } from 'react-native'
 import React, { useState } from 'react'
 import { Button } from 'react-native-elements';
 
@@ -8,6 +8,8 @@ export default function GameScreen({ phoneNumber, onRestart }) {
   const [attemptsLeft, setAttemptsLeft] = useState(4);
   const [timeLeft, setTimeLeft] = useState(60);
   const [currentGuess, setCurrentGuess] = useState('');
+  const [hintUsed, setHintUsed] = useState(false);
+
   const lastDigit = phoneNumber[phoneNumber.length - 1];
   
   function generateNewTarget() {
@@ -27,6 +29,13 @@ export default function GameScreen({ phoneNumber, onRestart }) {
     setTimeLeft(60);
   }
 
+  function useHint() {
+    if (!hintUsed) {
+      setHintUsed(true);
+      Alert.alert(`Hint: The target number is a multiple of ${lastDigit}`);
+    }
+  }
+
 
   return (
     <View style={styles.container}>
@@ -41,7 +50,19 @@ export default function GameScreen({ phoneNumber, onRestart }) {
           </View>
         </View>
       ) : (
-        <Text>Game Started</Text>
+        <View style={styles.gameContainer}>
+          <Text>Attempts left: {attemptsLeft}</Text>
+          <Text>Timer: {timeLeft}s</Text>
+
+          <TextInput
+            style={styles.input}
+            value={currentGuess}
+            onChangeText={setCurrentGuess}
+            placeholder="Enter your guess"
+            keyboardType="numeric"
+          />
+          <Button title="Use a hint" onPress={useHint} disabled={hintUsed} />
+        </View>
       )}
     </View>
   )
