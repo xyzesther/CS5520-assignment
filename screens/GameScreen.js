@@ -2,7 +2,7 @@ import { Alert, StyleSheet, Text, View, TextInput, Image } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { Button } from 'react-native-elements';
 
-export default function GameScreen({ phoneNumber, onRestart }) {
+export default function GameScreen({ phoneNumber }) {
   const [gameStarted, setGameStarted] = useState(false);
   const [currentTarget, setCurrentTarget] = useState(0);
   const [attemptsLeft, setAttemptsLeft] = useState(4);
