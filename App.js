@@ -30,7 +30,12 @@ export default function App() {
     <SafeAreaView style={styles.container}>
       <StatusBar style="auto" />
       {currentScreen === 'StartScreen' && (
-        <StartScreen onRegister={handleRegister} />
+        <StartScreen 
+        onRegister={handleRegister} 
+        initialName={name}
+        initialEmail={email}
+        initialPhoneNumber={phoneNumber}
+        />
       )}
       {currentScreen === 'ConfirmScreen' && (
         <ConfirmScreen

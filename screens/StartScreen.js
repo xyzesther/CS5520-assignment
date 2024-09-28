@@ -2,10 +2,10 @@ import React, { useState } from 'react'
 import { View, StyleSheet, Text, TextInput, Alert, Button } from 'react-native'
 import { CheckBox } from 'react-native-elements'
 
-export default function StartScreen({ onRegister }) {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [phoneNumber, setPhoneNumber] = useState('');
+export default function StartScreen({ onRegister, initialName, initialEmail, initialPhoneNumber }) {
+  const [name, setName] = useState(initialName || '');
+  const [email, setEmail] = useState(initialEmail || '');
+  const [phoneNumber, setPhoneNumber] = useState(initialPhoneNumber || '');
   const [isCheckBoxChecked, setIsCheckBoxChecked] = useState(false);
   const [errorMsg, setErrorMsg] = useState({name: '', email: '', phoneNumber: ''});
 
@@ -24,9 +24,11 @@ export default function StartScreen({ onRegister }) {
   }
 
   function validatePhoneNumber(phoneNumber) {
+    const numericRegex = /^[0-9]+$/;
     const lastDigit = phoneNumber.charAt(phoneNumber.length - 1);
 
-    if (!phoneNumber || phoneNumber.length !== 10 
+    if (!phoneNumber || !numericRegex.test(phoneNumber) 
+        || phoneNumber.length !== 10 
         || lastDigit === '1' || lastDigit === '0') {
       return 'Please enter a valid phone number';
     }
@@ -56,7 +58,7 @@ export default function StartScreen({ onRegister }) {
     if (!errorMsg.name && !errorMsg.email && !errorMsg.phoneNumber) {
       onRegister({ name, email, phoneNumber });
     } else {
-      Alert.alert('Invalid input', 'Please check your input', [{text: 'OK'}]);
+      Alert.alert('Invalid input', 'Please check input values', [{text: 'OK'}]);
     }
   }
 
