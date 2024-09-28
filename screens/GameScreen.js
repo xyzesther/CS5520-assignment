@@ -1,5 +1,5 @@
 import { Alert, StyleSheet, Text, View, TextInput } from 'react-native'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button } from 'react-native-elements';
 
 export default function GameScreen({ phoneNumber, onRestart }) {
@@ -62,6 +62,18 @@ export default function GameScreen({ phoneNumber, onRestart }) {
     setCurrentGuess('');
   }
 
+  // Timer
+  useEffect(() => {
+    let interval;
+    if (gameStarted && timeLeft > 0) {
+      interval = setInterval(() => {
+        setTimeLeft((prevTimer) => prevTimer - 1);
+      }, 1000);
+    } else if (timeLeft === 0) {
+      endGame('time');
+    }
+    return () => clearInterval(interval);
+  }, [gameStarted, timeLeft]);
 
   return (
     <View style={styles.container}>
