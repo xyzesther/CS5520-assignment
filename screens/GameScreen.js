@@ -18,10 +18,11 @@ export default function GameScreen({ phoneNumber }) {
   // Generate a new target number
   function generateNewTarget() {
     const multiples = []
-    for (let i = lastDigit; i <= 100; i += lastDigit) {
+    for (let i = parseInt(lastDigit); i <= 100; i += parseInt(lastDigit)) {
       multiples.push(i);
     }
-    const randomIndex = multiples[Math.floor(Math.random() * multiples.length)];
+
+    const randomIndex = Math.floor(Math.random() * multiples.length);
     const newTarget = multiples[randomIndex];
     return newTarget;
   }
@@ -114,7 +115,7 @@ export default function GameScreen({ phoneNumber }) {
       {!gameStarted && !gameOver ? (
         // Game not started
         <View style={styles.card}>
-          <Text>Guess a number between 1 & 100 that is multiply of {lastDigit}.</Text>
+          <Text style={styles.text}>Guess a number between 1 & 100 that is multiply of {lastDigit}.</Text>
           <View style={styles.button}>
             <Button title="Start" onPress={startGame} />
           </View>
@@ -135,8 +136,7 @@ export default function GameScreen({ phoneNumber }) {
         ) : (
           // Make guess screen
           <View style={styles.card}>
-            <Text style={styles.normalText}>Attempts left: {attemptsLeft}</Text>
-            <Text style={styles.normalText}>Timer: {timeLeft}s</Text>
+            <Text style={styles.text}>Guess a number between 1 & 100 that is multiply of {lastDigit}.</Text>
 
             <TextInput
               style={styles.input}
@@ -145,6 +145,10 @@ export default function GameScreen({ phoneNumber }) {
               placeholder="Enter your guess"
               keyboardType="numeric"
             />
+
+            <Text style={styles.hintText}>Attempts left: {attemptsLeft}</Text>
+            <Text style={styles.hintText}>Timer: {timeLeft}s</Text>
+
 
             <View style={styles.button}>
               <Button title="Use a hint" onPress={useHint} disabled={hintUsed} />
@@ -166,12 +170,12 @@ export default function GameScreen({ phoneNumber }) {
       ) : (
         // Game Over
         <View style={styles.card}>
-          <Text style={styles.normalText}>The game is over!</Text>
+          <Text style={styles.text}>The game is over!</Text>
           <Image
             source={require('../assets/sad-smiley.png')}
             style={styles.image}
           />
-          <Text style={styles.normalText}>{feedback}</Text>
+          <Text style={styles.text}>{feedback}</Text>
           <View style={styles.button}>
             <Button title="New Game" onPress={startGame} />
           </View>
@@ -184,30 +188,35 @@ export default function GameScreen({ phoneNumber }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
   },
 
   restartBtn: {
     position: 'absolute',
-    top: 200,
+    top: 150,
     right: 0,
     margin: 10,
   },
 
   card: {
-    backgroundColor: '#grey',
+    backgroundColor: '#A9A9A9',
     width: '80%',
     borderRadius: 10,
     padding: 20,
     alignItems: 'center',
   },
 
-  normalText: {
-    fontSize: 14,
+  text: {
+    fontSize: 16,
     marginBottom: 10,
-    color: 'Blue',
+    color: 'indigo',
+  },
+
+  hintText: {
+    fontSize: 12,
+    color: 'black',
+    marginBottom: 10,
   },
 
   image: {
@@ -217,7 +226,9 @@ const styles = StyleSheet.create({
   },
 
   button: {
-    marginTop: 20,
+    marginBottom: 20,
+    marginHorizontal: 30,
+    borderColor: 'blue',
   },
 
   gameContainer: {
@@ -229,9 +240,6 @@ const styles = StyleSheet.create({
     borderColor: '#ccc',
     marginBottom: 20,
     padding: 10,
-    fontSize: 18,
+    fontSize: 16,
   },
-
-
-
 })
