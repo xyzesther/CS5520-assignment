@@ -17,7 +17,8 @@ export default function StartScreen({ onRegister, initialName, initialEmail, ini
   }
 
   function validateEmail(email) {
-    if (!email || !email.includes('@')) {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!email || !emailRegex.test(email)) {
       return 'Please enter a valid email address';
     }
     return '';
@@ -79,6 +80,7 @@ export default function StartScreen({ onRegister, initialName, initialEmail, ini
           style={styles.input}
           value={name}
           onChangeText={handleNameChange}
+          autoCapitalize="none"
         />
         {errorMsg.name ? <Text style={styles.errorMsg}>{errorMsg.name}</Text> : null}
 
@@ -88,6 +90,7 @@ export default function StartScreen({ onRegister, initialName, initialEmail, ini
           value={email}
           onChangeText={handleEmailChange}
           keyboardType="email-address"
+          autoCapitalize="none"
         />
         {errorMsg.email ? <Text style={styles.errorMsg}>{errorMsg.email}</Text> : null}
 
@@ -166,8 +169,11 @@ const styles = StyleSheet.create({
     borderBottomColor: 'indigo',
     borderBottomWidth: 2,
     marginBottom: 10,
-    fontSize: 16,
+    fontSize: 18,
     paddingVertical: 5,
+    textAlign: 'center',
+    color: 'indigo',
+    fontWeight: 'bold',
   },
 
   errorMsg: {
