@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { View, StyleSheet, Text, TextInput, Alert, Button } from 'react-native'
+import { View, StyleSheet, Text, TextInput, Alert, Button, SafeAreaView } from 'react-native'
 import { CheckBox } from 'react-native-elements'
 
 export default function StartScreen({ onRegister, initialName, initialEmail, initialPhoneNumber }) {
@@ -72,6 +72,7 @@ export default function StartScreen({ onRegister, initialName, initialEmail, ini
 
   return (
     <View style={styles.container}>
+      <Text style={styles.welcome}>Welcome</Text> 
       <View style={styles.form}>
         <Text style={styles.label}>Name: </Text>
         <TextInput 
@@ -107,7 +108,7 @@ export default function StartScreen({ onRegister, initialName, initialEmail, ini
             checkedIcon="checkbox-outline"
             uncheckedIcon="checkbox-blank-outline"
           />
-          <Text>I am not a robot</Text>
+          <Text style={styles.checkboxText}>I am not a robot</Text>
         </View>
 
         <View style={styles.buttonContainer}>
@@ -134,29 +135,39 @@ export default function StartScreen({ onRegister, initialName, initialEmail, ini
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'grey',
+    backgroundColor: '#87CEFA',
     alignItems: 'center',
     justifyContent: 'center',
   },
 
   form: {
-    backgroundColor: '#f0f0f0',
-    borderRadius: 10,
+    backgroundColor: '#A9A9A9',
+    borderRadius: 20,
     padding: 20,
-    width: '80%',
+    width: '90%',
+  },
+
+  welcome: {
+    fontSize: 32,
+    fontWeight: 'bold',
+    color: 'indigo',
+    marginBottom: 20,
+    textAlign: 'center',
   },
 
   label: {
-    color: "blue",
-    fontSize: 16,
+    color: 'indigo',
+    fontSize: 18,
     marginBottom: 5,
     marginTop: 10,
   },
 
   input: {
-    borderBottomColor: "blue",
+    borderBottomColor: 'indigo',
     borderBottomWidth: 2,
     marginBottom: 10,
+    fontSize: 16,
+    paddingVertical: 5,
   },
 
   errorMsg: {
@@ -168,15 +179,20 @@ const styles = StyleSheet.create({
   checkboxContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingRight: 0,
-    marginBottom: 10,
+    justifyContent: 'flex-start',
+    marginBottom: 20,
+  },
+
+  checkboxText: {
+    color: 'indigo',
+    fontSize: 16,
+    paddingLeft: 0,
   },
 
   buttonContainer: {
-    marginVertical: 5,
     flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginTop: 10,
   },
 
   button: {
