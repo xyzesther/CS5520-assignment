@@ -75,15 +75,15 @@ export default function GameScreen({ phoneNumber }) {
   // Timer
   useEffect(() => {
     let interval;
-    if (gameStarted && timeLeft > 0) {
+    if (gameStarted && !hasWon && timeLeft > 0) {
       interval = setInterval(() => {
         setTimeLeft((prevTimer) => prevTimer - 1);
       }, 1000);
-    } else if (timeLeft === 0) {
+    } else if (timeLeft === 0 && !hasWon) {
       endGame('time');
     }
     return () => clearInterval(interval);
-  }, [gameStarted, timeLeft]);
+  }, [gameStarted, timeLeft, hasWon]);
 
   function handleTryAgain() {
     setAttemptsLeft((prevAttemptLeft) => prevAttemptLeft - 1);
