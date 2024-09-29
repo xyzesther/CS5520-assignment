@@ -4,30 +4,32 @@ import { LinearGradient } from 'expo-linear-gradient'
 
 export default function ConfirmScreen({ modalVisible, name, email, phoneNumber, onGoBack, onContinue }) {
   return (
-    <Modal animationType='slide' visible={modalVisible} >
-      <LinearGradient 
-        colors={['rgba(0,0,0,0.5)', 'transparent']}
-        style={styles.gradientBackground}
-      />
-      <View style={styles.container}>
-        <View style={styles.insideContainer}>
-          <Text>Hello {name}</Text>
-          <Text>Here is the information you entered: </Text>
-          <Text>{email}</Text>
-          <Text>{phoneNumber}</Text>
-          <Text>If it is not correct, please go back and edit them</Text>
+    <Modal 
+      animationType='slide' 
+      transparent={true}
+      visible={modalVisible} >
+      <View style={styles.modalBackground}>
+
+        <View style={styles.modalContainer}>
+          <Text style={styles.text}>Hello {name}</Text>
+          <Text style={styles.text}>Here is the information you entered: </Text>
+          <Text style={styles.text}>{email}</Text>
+          <Text style={styles.text}>{phoneNumber}</Text>
+          <Text style={styles.text}>If it is not correct, please go back and edit them.</Text>
+          
           <View style={styles.buttonContainer}>
             <View style={styles.button}>
               <Button 
-                style={styles.backButton}
                 title="Go Back" 
-                onPress={onGoBack} 
+                onPress={onGoBack}
+                color="red" 
               />
             </View>
-            <View style={styles.continueButton}>
+            <View style={styles.button}>
               <Button 
                 title="Continue" 
-                onPress={onContinue} 
+                onPress={onContinue}
+                color="blue" 
               />
             </View>
           </View>
@@ -38,36 +40,36 @@ export default function ConfirmScreen({ modalVisible, name, email, phoneNumber, 
 }
 
 const styles = StyleSheet.create({
-  container: {
+  modalBackground: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
     justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
 
-  gradientBackground: {
-    position: 'absolute',
-    left: 0,
-    right: 0,
-    top: 0,
-    height: '100%',
-  },
-
-  insideContainer: {
-    backgroundColor: '#f0f0f0',
+  modalContainer: {
+    width: '90%',
+    backgroundColor: 'rgba(255, 255, 255, 0.9)',
     borderRadius: 10,
     padding: 20,
-    alignItems: 'center',
+    alignItems: 'flex-start',
+  },
+
+  text: {
+    fontSize: 16,
+    color: 'indigo',
+    marginBottom: 5,
   },
 
   buttonContainer: {
-    width: '40%',
+    width: '80%',
     marginVertical: 5,
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
 
   button: {
-    marginHorizontal: 10,
+    marginHorizontal: 30,
+    borderColor: 'blue',
   },
 })
