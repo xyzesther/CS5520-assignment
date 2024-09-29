@@ -12,6 +12,7 @@ export default function GameScreen({ phoneNumber }) {
   const [feedback, setFeedback] = useState('');
   const [gameOver, setGameOver] = useState(false);
   const [showFeedback, setShowFeedback] = useState(false);
+  const [hasWon, setHasWon] = useState(false);
 
   const lastDigit = phoneNumber[phoneNumber.length - 1];
   
@@ -35,6 +36,7 @@ export default function GameScreen({ phoneNumber }) {
     setTimeLeft(60);
     setHintUsed(false);
     setGameOver(false);
+    setHasWon(false);
     setFeedback('');
     setShowFeedback(false);
   }
@@ -60,7 +62,7 @@ export default function GameScreen({ phoneNumber }) {
     // Check if the guess is the target number
     if (guess === currentTarget) {
       setFeedback(`You guessed correct! Attempts Used: ${4 - attemptsLeft + 1}`);
-      setGameStarted(false);
+      setHasWon(true);
     } else {
       const guessDirection = guess < currentTarget ? 'higher' : 'lower';
       setFeedback(`You did not guess correct! You should guess ${guessDirection}`);
@@ -122,7 +124,20 @@ export default function GameScreen({ phoneNumber }) {
         </View>
       ) : !gameOver ? (
         // Game is running
-        showFeedback ? (
+        hasWon ? (
+          // Show user won screen
+          <View style={styles.card}>
+            <Text style={styles.text}>You guessed correct!</Text>
+            <Text style={styles.text}>Attempts Used: {4 - attemptsLeft + 1}</Text>
+            <Image
+              style={styles.image}
+              source={{ uri: `https://picsum.photos/id/${currentTarget}/100/100` }}
+            />
+            <View style={styles.button}>
+              <Button title="New Game" onPress={startGame} />
+            </View>
+          </View>
+        ) : showFeedback ? (
           // Show feedback screen
           <View style={styles.card}>
             <Text>{feedback}</Text>
@@ -158,13 +173,6 @@ export default function GameScreen({ phoneNumber }) {
             </View>
 
             {feedback !== '' && <Text>{feedback}</Text>}
-
-            {feedback.includes('You guessed correct') && (
-              <Image
-                style={styles.image}
-                source={{ uri: `https://picsum.photos/id/${chosenNumber}/100/100` }}
-              />
-            )}
           </View>
         )
       ) : (
@@ -220,7 +228,7 @@ const styles = StyleSheet.create({
   },
 
   image: {
-    marginTop: 20,
+    marginBottom: 20,
     width: 100,
     height: 100,
   },
@@ -229,10 +237,6 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     marginHorizontal: 30,
     borderColor: 'blue',
-  },
-
-  gameContainer: {
-    marginTop: 20,
   },
 
   input: {
