@@ -1,9 +1,11 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, SafeAreaView } from 'react-native';
+import { StyleSheet, SafeAreaView } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
 import StartScreen from './screens/StartScreen';
 import ConfirmScreen from './screens/ConfirmScreen';
 import GameScreen from './screens/GameScreen';
+import { colors } from './colors';
 
 export default function App() {
   const [currentScreen, setCurrentScreen] = useState('StartScreen');
@@ -29,29 +31,34 @@ export default function App() {
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar style="auto" />
-      {currentScreen === 'StartScreen' && (
-        <StartScreen 
-        onRegister={handleRegister} 
-        initialName={name}
-        initialEmail={email}
-        initialPhoneNumber={phoneNumber}
-        />
-      )}
-      {currentScreen === 'ConfirmScreen' && (
-        <ConfirmScreen
-          visible
-          name={name}
-          email={email}
-          phoneNumber={phoneNumber}
-          onGoBack={handleGoBack}
-          onContinue={handleConfirm}
-        />
-      )}
-      {currentScreen === 'GameScreen' && (
-        <GameScreen 
-          phoneNumber={phoneNumber}
-        />
-      )}
+      <LinearGradient
+        colors={colors.background}
+        style={styles.background}
+      >
+        {currentScreen === 'StartScreen' && (
+          <StartScreen 
+          onRegister={handleRegister} 
+          initialName={name}
+          initialEmail={email}
+          initialPhoneNumber={phoneNumber}
+          />
+        )}
+        {currentScreen === 'ConfirmScreen' && (
+          <ConfirmScreen
+            visible
+            name={name}
+            email={email}
+            phoneNumber={phoneNumber}
+            onGoBack={handleGoBack}
+            onContinue={handleConfirm}
+          />
+        )}
+        {currentScreen === 'GameScreen' && (
+          <GameScreen 
+            phoneNumber={phoneNumber}
+          />
+        )}
+      </LinearGradient>
     </SafeAreaView>
   );
 }
@@ -59,7 +66,9 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+  },
+  background: {
+    flex: 1,
     justifyContent: 'center',
   },
 });
