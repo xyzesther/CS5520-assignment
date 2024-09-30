@@ -75,8 +75,16 @@ export default function GameScreen({ phoneNumber }) {
       const guessDirection = guess < currentTarget ? 'higher' : 'lower';
       setFeedback(`You did not guess correct! You should guess ${guessDirection}`);
       setShowFeedback(true);
-    }
 
+      setAttemptsLeft((prevAttemptsLeft) => {
+        const newAttemptsLeft = prevAttemptsLeft - 1;
+        if (newAttemptsLeft <= 0) {
+          endGame('attempts');
+          return 0;
+        }
+        return newAttemptsLeft;
+      });
+    }
     setCurrentGuess('');
   }
 
@@ -94,7 +102,6 @@ export default function GameScreen({ phoneNumber }) {
   }, [gameStarted, timeLeft, hasWon]);
 
   function handleTryAgain() {
-    setAttemptsLeft((prevAttemptLeft) => prevAttemptLeft - 1);
     setFeedback('');
     setShowFeedback(false);
   }
