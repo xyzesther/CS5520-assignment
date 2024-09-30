@@ -9,6 +9,7 @@ export default function GameScreen({ phoneNumber }) {
   const [timeLeft, setTimeLeft] = useState(60);
   const [currentGuess, setCurrentGuess] = useState('');
   const [hintUsed, setHintUsed] = useState(false);
+  const [hintMessage, setHintMessage] = useState('');
   const [feedback, setFeedback] = useState('');
   const [gameOver, setGameOver] = useState(false);
   const [showFeedback, setShowFeedback] = useState(false);
@@ -35,6 +36,7 @@ export default function GameScreen({ phoneNumber }) {
     setAttemptsLeft(4);
     setTimeLeft(60);
     setHintUsed(false);
+    setHintMessage('');
     setGameOver(false);
     setHasWon(false);
     setFeedback('');
@@ -45,7 +47,11 @@ export default function GameScreen({ phoneNumber }) {
   function useHint() {
     if (!hintUsed) {
       setHintUsed(true);
-      Alert.alert(`Hint: The target number is a multiple of ${lastDigit}`);
+      if (currentTarget <= 50) {
+        setHintMessage('The number is between 1 and 50');
+      } else {
+        setHintMessage('The number is between 50 and 100');
+      }
     }
   }
 
@@ -161,8 +167,9 @@ export default function GameScreen({ phoneNumber }) {
               keyboardType="numeric"
             />
 
-            <Text style={styles.hintText}>Attempts left: {attemptsLeft}</Text>
-            <Text style={styles.hintText}>Timer: {timeLeft}s</Text>
+            {hintMessage !== '' && <Text style={styles.hintText}>{hintMessage}</Text>}
+            <Text style={styles.msgText}>Attempts left: {attemptsLeft}</Text>
+            <Text style={styles.msgText}>Timer: {timeLeft}s</Text>
 
 
             <View style={styles.button}>
@@ -208,7 +215,7 @@ const styles = StyleSheet.create({
   },
 
   card: {
-    backgroundColor: '#A9A9A9',
+    backgroundColor: '#dcdcdc',
     width: '80%',
     borderRadius: 10,
     padding: 20,
@@ -217,13 +224,19 @@ const styles = StyleSheet.create({
 
   text: {
     fontSize: 16,
-    marginBottom: 10,
+    marginBottom: 20,
     color: 'indigo',
   },
 
   hintText: {
-    fontSize: 12,
+    fontSize: 14,
     color: 'black',
+    marginBottom: 10,
+  },
+
+  msgText: {
+    fontSize: 14,
+    color: 'dimgrey',
     marginBottom: 10,
   },
 
