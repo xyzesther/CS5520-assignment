@@ -4,7 +4,7 @@ import { colors } from '../colors';
 
 export const Button = ({ title, onPress, color = 'primary', disabled }) => (
   <TouchableOpacity
-    style={[styles.button, { backgroundColor: colors.button[color] }]}
+    style={styles.button}
     onPress={onPress}
     disabled={disabled}
   >
@@ -19,6 +19,9 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     alignItems: 'center',
     justifyContent: 'center',
+    marginVertical: 10,
+    width: '100%',
+    backgroundColor: colors.button.primary,
   },
   buttonText: {
     color: 'white',

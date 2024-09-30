@@ -1,6 +1,9 @@
 import { Alert, StyleSheet, Text, View, TextInput, Image } from 'react-native'
 import React, { useEffect, useState } from 'react'
-import { Button } from 'react-native-elements';
+import { Card } from '../components/Card'
+import { Button } from '../components/Button'
+import { Input } from '../components/Input'
+import { colors } from '../colors'
 
 export default function GameScreen({ phoneNumber }) {
   const [gameStarted, setGameStarted] = useState(false);
@@ -129,82 +132,68 @@ export default function GameScreen({ phoneNumber }) {
         <Button title="Restart" onPress={startGame} />
       </View>
 
-      {!gameStarted && !gameOver ? (
-        // Game not started
-        <View style={styles.card}>
-          <Text style={styles.text}>Guess a number between 1 & 100 that is multiply of {lastDigit}.</Text>
-          <View style={styles.button}>
+      <Card>
+        {!gameStarted && !gameOver ? (
+          // Game not started
+          <View>
+            <Text style={styles.text}>Guess a number between 1 & 100 that is multiply of {lastDigit}.</Text>
             <Button title="Start" onPress={startGame} />
           </View>
-        </View>
-      ) : !gameOver ? (
-        // Game is running
-        hasWon ? (
-          // Show user won screen
-          <View style={styles.card}>
-            <Text style={styles.text}>You guessed correct!</Text>
-            <Text style={styles.text}>Attempts Used: {4 - attemptsLeft + 1}</Text>
-            <Image
-              style={styles.image}
-              source={{ uri: `https://picsum.photos/id/${currentTarget}/100/100` }}
-            />
-            <View style={styles.button}>
+        ) : !gameOver ? (
+          // Game is running
+          hasWon ? (
+            // Show user won screen
+            <View>
+              <Text style={styles.text}>You guessed correct!</Text>
+              <Text style={styles.text}>Attempts Used: {4 - attemptsLeft + 1}</Text>
+              <Image
+                style={styles.image}
+                source={{ uri: `https://picsum.photos/id/${currentTarget}/100/100` }}
+              />
               <Button title="New Game" onPress={startGame} />
             </View>
-          </View>
-        ) : showFeedback ? (
-          // Show feedback screen
-          <View style={styles.card}>
-            <Text>{feedback}</Text>
-            <View style={styles.button}>
+          ) : showFeedback ? (
+            // Show feedback screen
+            <View>
+              <Text>{feedback}</Text>
               <Button title="Try Again" onPress={handleTryAgain} />
-            </View>
-            <View style={styles.button}>
               <Button title="End the Game" onPress={handleUserEndGame} />
             </View>
-          </View>
-        ) : (
-          // Make guess screen
-          <View style={styles.card}>
-            <Text style={styles.text}>Guess a number between 1 & 100 that is multiply of {lastDigit}.</Text>
+          ) : (
+            // Make guess screen
+            <View>
+              <Text style={styles.text}>Guess a number between 1 & 100 that is multiply of {lastDigit}.</Text>
 
-            <TextInput
-              style={styles.input}
-              value={currentGuess}
-              onChangeText={setCurrentGuess}
-              placeholder="Enter your guess"
-              keyboardType="numeric"
-            />
+              <Input
+                value={currentGuess}
+                onChangeText={setCurrentGuess}
+                placeholder="Enter your guess"
+                keyboardType="numeric"
+              />
 
-            {hintMessage !== '' && <Text style={styles.hintText}>{hintMessage}</Text>}
-            <Text style={styles.msgText}>Attempts left: {attemptsLeft}</Text>
-            <Text style={styles.msgText}>Timer: {timeLeft}s</Text>
+              {hintMessage !== '' && <Text style={styles.hintText}>{hintMessage}</Text>}
+              <Text style={styles.msgText}>Attempts left: {attemptsLeft}</Text>
+              <Text style={styles.msgText}>Timer: {timeLeft}s</Text>
 
-
-            <View style={styles.button}>
               <Button title="Use a hint" onPress={useHint} disabled={hintUsed} />
-            </View>
-            <View style={styles.button}>
               <Button title="Submit" onPress={handleGuess} />
-            </View>
 
-            {feedback !== '' && <Text style={styles.text}>{feedback}</Text>}
-          </View>
-        )
-      ) : (
-        // Game Over
-        <View style={styles.card}>
-          <Text style={styles.text}>The game is over!</Text>
-          <Image
-            source={require('../assets/sad-smiley.png')}
-            style={styles.image}
-          />
-          <Text style={styles.text}>{feedback}</Text>
-          <View style={styles.button}>
+              {feedback !== '' && <Text style={styles.text}>{feedback}</Text>}
+            </View>
+          )
+        ) : (
+          // Game Over
+          <View>
+            <Text style={styles.text}>The game is over!</Text>
+            <Image
+              source={require('../assets/sad-smiley.png')}
+              style={styles.image}
+            />
+            <Text style={styles.text}>{feedback}</Text>
             <Button title="New Game" onPress={startGame} />
           </View>
-        </View>
-      )}
+        )}
+      </Card>
     </View>
   )
 }
@@ -223,29 +212,21 @@ const styles = StyleSheet.create({
     margin: 10,
   },
 
-  card: {
-    backgroundColor: '#dcdcdc',
-    width: '80%',
-    borderRadius: 10,
-    padding: 20,
-    alignItems: 'center',
-  },
-
   text: {
     fontSize: 16,
     marginBottom: 20,
-    color: 'indigo',
+    color: colors.text.primary,
   },
 
   hintText: {
     fontSize: 14,
-    color: 'black',
+    color: colors.text.secondary,
     marginBottom: 10,
   },
 
   msgText: {
     fontSize: 14,
-    color: 'dimgrey',
+    color: colors.text.secondary,
     marginBottom: 10,
   },
 
@@ -255,17 +236,4 @@ const styles = StyleSheet.create({
     height: 100,
   },
 
-  button: {
-    marginBottom: 20,
-    marginHorizontal: 30,
-    borderColor: 'blue',
-  },
-
-  input: {
-    borderBottomWidth: 1,
-    borderColor: '#ccc',
-    marginBottom: 20,
-    padding: 10,
-    fontSize: 16,
-  },
 })
