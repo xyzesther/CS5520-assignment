@@ -16,11 +16,11 @@ export default function GameScreen({ phoneNumber }) {
   const [hasWon, setHasWon] = useState(false);
 
   const lastDigit = phoneNumber[phoneNumber.length - 1];
-  const multiples = [];
   
   // Generate a new target number
   function generateNewTarget() {
-    multiples.length = 0;
+    const multiples = [];
+
     for (let i = parseInt(lastDigit); i <= 100; i += parseInt(lastDigit)) {
       multiples.push(i);
     }
@@ -42,6 +42,7 @@ export default function GameScreen({ phoneNumber }) {
     setHasWon(false);
     setFeedback('');
     setShowFeedback(false);
+    setCurrentGuess('');
   }
 
   // Use a hint
@@ -61,8 +62,8 @@ export default function GameScreen({ phoneNumber }) {
     const guess = parseInt(currentGuess);
     
     // Check if the guess is a valid guess
-    if (isNaN(guess) || guess < 1 || guess > 100 || !multiples.includes(guess)) {
-      Alert.alert('Invalid number!', `Number has to be a multiply of ${lastDigit} between 1 and 100`, [{ text: 'OK' }]);
+    if (isNaN(guess) || guess < 1 || guess > 100 || guess % parseInt(lastDigit) !== 0) {
+      Alert.alert('Invalid number!', `Number has to be a multiply of ${lastDigit} between 1 and 100`, [{ text: 'Okay' }]);
       return;
     }
 
@@ -180,7 +181,7 @@ export default function GameScreen({ phoneNumber }) {
               <Button title="Submit" onPress={handleGuess} />
             </View>
 
-            {feedback !== '' && <Text>{feedback}</Text>}
+            {feedback !== '' && <Text style={styles.text}>{feedback}</Text>}
           </View>
         )
       ) : (
