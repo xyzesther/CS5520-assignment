@@ -150,14 +150,18 @@ export default function GameScreen({ phoneNumber }) {
                 style={styles.image}
                 source={{ uri: `https://picsum.photos/id/${currentTarget}/100/100` }}
               />
-              <Button title="New Game" onPress={startGame} />
+              <View style={styles.buttonContainer}>
+                <Button title="New Game" onPress={startGame} />
+              </View>
             </View>
           ) : showFeedback ? (
             // Show feedback screen
             <View>
               <Text style={styles.text}>{feedback}</Text>
-              <Button title="Try Again" onPress={handleTryAgain} />
-              <Button title="End the Game" onPress={handleUserEndGame} />
+              <View style={styles.buttonContainer}>
+                <Button title="Try Again" onPress={handleTryAgain} />
+                <Button title="End the Game" onPress={handleUserEndGame} />
+              </View>
             </View>
           ) : (
             // Make guess screen
@@ -175,8 +179,10 @@ export default function GameScreen({ phoneNumber }) {
               <Text style={styles.msgText}>Attempts left: {attemptsLeft}</Text>
               <Text style={styles.msgText}>Timer: {timeLeft}s</Text>
 
-              <Button title="Use a hint" onPress={useHint} disabled={hintUsed} />
-              <Button title="Submit" onPress={handleGuess} />
+              <View style={styles.buttonContainer}>
+                <Button title="Use a hint" onPress={useHint} disabled={hintUsed} />
+                <Button title="Submit" onPress={handleGuess} />
+              </View>
 
               {feedback !== '' && <Text style={styles.text}>{feedback}</Text>}
             </View>
@@ -190,7 +196,9 @@ export default function GameScreen({ phoneNumber }) {
               style={styles.image}
             />
             <Text style={styles.text}>{feedback}</Text>
-            <Button title="New Game" onPress={startGame} />
+            <View style={styles.buttonContainer}>  
+              <Button title="New Game" onPress={startGame} />
+            </View>
           </View>
         )}
       </Card>
@@ -208,8 +216,8 @@ const styles = StyleSheet.create({
   restartBtn: {
     position: 'absolute',
     top: 150,
-    right: 0,
-    margin: 10,
+    right: 10,
+    marginBottom: 20,
   },
 
   text: {
@@ -238,6 +246,12 @@ const styles = StyleSheet.create({
     width: 100,
     height: 100,
     alignSelf: 'center',
+  },
+
+  buttonContainer: {
+    flexDirection: 'column',
+    alignItems: 'center',
+    width: '100%',
   },
 
 })
