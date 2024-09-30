@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
   },
 
   buttonContainer: {
-    width: '80%',
+    width: '100%',
     marginVertical: 5,
     flexDirection: 'row',
     alignItems: 'center',
