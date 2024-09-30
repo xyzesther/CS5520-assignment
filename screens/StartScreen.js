@@ -1,6 +1,10 @@
-import React, { useState } from 'react'
-import { View, StyleSheet, Text, TextInput, Alert, Button, SafeAreaView } from 'react-native'
-import { CheckBox } from 'react-native-elements'
+import React, { useState } from 'react';
+import { View, StyleSheet, Text, Alert } from 'react-native';
+import { CheckBox } from 'react-native-elements';
+import { Card } from '../components/Card';
+import { Button } from '../components/Button';
+import { Input } from '../components/Input';
+import { colors } from '../colors';
 
 export default function StartScreen({ onRegister, initialName, initialEmail, initialPhoneNumber }) {
   const [name, setName] = useState(initialName || '');
@@ -74,10 +78,9 @@ export default function StartScreen({ onRegister, initialName, initialEmail, ini
   return (
     <View style={styles.container}>
       <Text style={styles.welcome}>Welcome</Text> 
-      <View style={styles.form}>
+      <Card>
         <Text style={styles.label}>Name: </Text>
-        <TextInput 
-          style={styles.input}
+        <Input 
           value={name}
           onChangeText={handleNameChange}
           autoCapitalize="none"
@@ -85,8 +88,7 @@ export default function StartScreen({ onRegister, initialName, initialEmail, ini
         {errorMsg.name ? <Text style={styles.errorMsg}>{errorMsg.name}</Text> : null}
 
         <Text style={styles.label}>Email Address: </Text>
-        <TextInput 
-          style={styles.input}
+        <Input 
           value={email}
           onChangeText={handleEmailChange}
           keyboardType="email-address"
@@ -95,8 +97,7 @@ export default function StartScreen({ onRegister, initialName, initialEmail, ini
         {errorMsg.email ? <Text style={styles.errorMsg}>{errorMsg.email}</Text> : null}
 
         <Text style={styles.label}>Phone Number: </Text>
-        <TextInput 
-          style={styles.input}
+        <Input 
           value={phoneNumber}
           onChangeText={handlePhoneNumberChange}
           keyboardType="numeric"
@@ -115,69 +116,47 @@ export default function StartScreen({ onRegister, initialName, initialEmail, ini
         </View>
 
         <View style={styles.buttonContainer}>
-          <View style={styles.button}>
-            <Button 
-              title="Reset" 
-              onPress={handleReset} 
-              color="red"/>
-          </View>
-          <View style={styles.button}>
-            <Button 
-              title="Register" 
-              onPress={handleRegister} 
-              disabled={!isCheckBoxChecked}
-              color="blue"
-            />
-          </View>
+          <Button 
+            title="Reset" 
+            onPress={handleReset} 
+            color="secondary"
+          />
+          <Button 
+            title="Register" 
+            onPress={handleRegister} 
+            disabled={!isCheckBoxChecked}
+            color="primary"
+          />
         </View>
-      </View>
+      </Card>
     </View>
-  )
-};
+  );
+}
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#87CEFA',
     alignItems: 'center',
     justifyContent: 'center',
-  },
-
-  form: {
-    backgroundColor: '#A9A9A9',
-    borderRadius: 20,
-    padding: 20,
-    width: '90%',
   },
 
   welcome: {
     fontSize: 32,
     fontWeight: 'bold',
-    color: 'indigo',
+    color: colors.accent,
     marginBottom: 20,
     textAlign: 'center',
   },
 
   label: {
-    color: 'indigo',
+    color: colors.text.primary,
     fontSize: 18,
     marginBottom: 5,
     marginTop: 10,
   },
 
-  input: {
-    borderBottomColor: 'indigo',
-    borderBottomWidth: 2,
-    marginBottom: 10,
-    fontSize: 18,
-    paddingVertical: 5,
-    textAlign: 'center',
-    color: 'indigo',
-    fontWeight: 'bold',
-  },
-
   errorMsg: {
-    color: 'red',
+    color: colors.error,
     fontSize: 12,
     marginBottom: 5,
   },
@@ -190,7 +169,7 @@ const styles = StyleSheet.create({
   },
 
   checkboxText: {
-    color: 'indigo',
+    color: colors.text.primary,
     fontSize: 16,
     paddingLeft: 0,
   },
@@ -198,11 +177,7 @@ const styles = StyleSheet.create({
   buttonContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginTop: 10,
+    marginButton: 20,
   },
 
-  button: {
-    marginHorizontal: 30,
-    borderColor: 'blue',
-  },
 });
