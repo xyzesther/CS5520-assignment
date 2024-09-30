@@ -12,6 +12,7 @@ export const colors = {
   button: {
     primary: 'blue',
     secondary: 'red',
+    disabledText: 'grey',
   },
   shadow: {
     shadowColor: '#000',
