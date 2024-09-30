@@ -18,7 +18,6 @@ export const Button = ({ title, onPress, color = 'primary', disabled }) => (
 
 const styles = StyleSheet.create({
   button: {
-    flex: 1,
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 5,

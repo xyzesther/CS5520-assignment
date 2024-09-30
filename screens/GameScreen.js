@@ -155,7 +155,7 @@ export default function GameScreen({ phoneNumber }) {
           ) : showFeedback ? (
             // Show feedback screen
             <View>
-              <Text>{feedback}</Text>
+              <Text style={styles.text}>{feedback}</Text>
               <Button title="Try Again" onPress={handleTryAgain} />
               <Button title="End the Game" onPress={handleUserEndGame} />
             </View>
@@ -216,24 +216,28 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginBottom: 20,
     color: colors.text.primary,
+    textAlign: 'center',
   },
 
   hintText: {
     fontSize: 14,
     color: colors.text.secondary,
     marginBottom: 10,
+    textAlign: 'center',
   },
 
   msgText: {
     fontSize: 14,
     color: colors.text.secondary,
     marginBottom: 10,
+    textAlign: 'center',
   },
 
   image: {
-    marginBottom: 20,
+    marginBottom: 10,
     width: 100,
     height: 100,
+    alignSelf: 'center',
   },
 
 })
