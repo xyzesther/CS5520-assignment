@@ -1,16 +1,18 @@
-import { StyleSheet, Text, View, Modal, Button } from 'react-native'
+import { StyleSheet, Text, View, Modal } from 'react-native'
 import React from 'react'
-import { LinearGradient } from 'expo-linear-gradient'
+import { Card } from '../components/Card'
+import { Button } from '../components/Button'
+import { colors } from '../colors'
 
 export default function ConfirmScreen({ modalVisible, name, email, phoneNumber, onGoBack, onContinue }) {
   return (
     <Modal 
       animationType='slide' 
       transparent={true}
-      visible={modalVisible} >
+      visible={modalVisible} 
+    >
       <View style={styles.modalBackground}>
-
-        <View style={styles.modalContainer}>
+        <Card style={styles.modalContainer}>
           <Text style={styles.text}>Hello {name}</Text>
           <Text style={styles.text}>Here is the information you entered: </Text>
           <Text style={styles.text}>{email}</Text>
@@ -18,22 +20,18 @@ export default function ConfirmScreen({ modalVisible, name, email, phoneNumber, 
           <Text style={styles.text}>If it is not correct, please go back and edit them.</Text>
           
           <View style={styles.buttonContainer}>
-            <View style={styles.button}>
-              <Button 
-                title="Go Back" 
-                onPress={onGoBack}
-                color="red" 
-              />
-            </View>
-            <View style={styles.button}>
-              <Button 
-                title="Continue" 
-                onPress={onContinue}
-                color="blue" 
-              />
-            </View>
+            <Button 
+              title="Go Back" 
+              onPress={onGoBack}
+              color="secondary" 
+            />
+            <Button 
+              title="Continue" 
+              onPress={onContinue}
+              color="primary" 
+            />
           </View>
-        </View>
+        </Card>
       </View>
     </Modal>
   )
@@ -49,7 +47,7 @@ const styles = StyleSheet.create({
 
   modalContainer: {
     width: '90%',
-    backgroundColor: 'rgba(255, 255, 255, 0.9)',
+    backgroundColor: colors.secondary,
     borderRadius: 10,
     padding: 20,
     alignItems: 'flex-start',
@@ -57,7 +55,7 @@ const styles = StyleSheet.create({
 
   text: {
     fontSize: 16,
-    color: 'indigo',
+    color: colors.text.primary,
     marginBottom: 5,
   },
 
@@ -65,11 +63,8 @@ const styles = StyleSheet.create({
     width: '80%',
     marginVertical: 5,
     flexDirection: 'row',
+    alignItems: 'center',
     justifyContent: 'space-between',
   },
 
-  button: {
-    marginHorizontal: 30,
-    borderColor: 'blue',
-  },
 })
