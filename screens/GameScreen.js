@@ -16,10 +16,11 @@ export default function GameScreen({ phoneNumber }) {
   const [hasWon, setHasWon] = useState(false);
 
   const lastDigit = phoneNumber[phoneNumber.length - 1];
+  const multiples = [];
   
   // Generate a new target number
   function generateNewTarget() {
-    const multiples = []
+    multiples.length = 0;
     for (let i = parseInt(lastDigit); i <= 100; i += parseInt(lastDigit)) {
       multiples.push(i);
     }
@@ -59,9 +60,9 @@ export default function GameScreen({ phoneNumber }) {
   function handleGuess() {
     const guess = parseInt(currentGuess);
     
-    // Check if the guess is a valid number
-    if (isNaN(guess) || guess < 1 || guess > 100) {
-      Alert.alert('Invalid input', 'Please enter a number between 1 and 100', [{ text: 'OK' }]);
+    // Check if the guess is a valid guess
+    if (isNaN(guess) || guess < 1 || guess > 100 || !multiples.includes(guess)) {
+      Alert.alert('Invalid number!', `Number has to be a multiply of ${lastDigit} between 1 and 100`, [{ text: 'OK' }]);
       return;
     }
 
