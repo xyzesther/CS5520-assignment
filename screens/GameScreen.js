@@ -5,7 +5,7 @@ import { Button } from '../components/Button'
 import { Input } from '../components/Input'
 import { colors } from '../colors'
 
-export default function GameScreen({ phoneNumber }) {
+export default function GameScreen({ phoneNumber, onRestart }) {
   const [gameStarted, setGameStarted] = useState(false);
   const [currentTarget, setCurrentTarget] = useState(0);
   const [attemptsLeft, setAttemptsLeft] = useState(4);
@@ -129,7 +129,7 @@ export default function GameScreen({ phoneNumber }) {
   return (
     <View style={styles.container}>
       <View style={styles.restartBtn}>
-        <Button title="Restart" onPress={startGame} />
+        <Button title="Restart" onPress={onRestart} />
       </View>
 
       <Card>

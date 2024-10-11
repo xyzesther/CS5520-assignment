@@ -28,13 +28,20 @@ export default function App() {
     setCurrentScreen('StartScreen');
   }
 
+  function handleRestart() {
+    setName('');
+    setEmail('');
+    setPhoneNumber('');
+    setCurrentScreen('StartScreen');
+  }
+
   return (
     <LinearGradient
-        colors={colors.background}
-        style={styles.container}
-      >
+      colors={colors.background}
+      style={styles.container}
+    >
       <SafeAreaView style={styles.container}>
-      <StatusBar style="auto" />
+        <StatusBar style="auto" />
         {currentScreen === 'StartScreen' && (
           <StartScreen 
           onRegister={handleRegister} 
@@ -56,6 +63,7 @@ export default function App() {
         {currentScreen === 'GameScreen' && (
           <GameScreen 
             phoneNumber={phoneNumber}
+            onRestart={handleRestart}
           />
         )}
       </SafeAreaView>
