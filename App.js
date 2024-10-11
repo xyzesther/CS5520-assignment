@@ -29,12 +29,12 @@ export default function App() {
   }
 
   return (
-    <SafeAreaView style={styles.container}>
-      <StatusBar style="auto" />
-      <LinearGradient
+    <LinearGradient
         colors={colors.background}
-        style={styles.background}
+        style={styles.container}
       >
+      <SafeAreaView style={styles.container}>
+      <StatusBar style="auto" />
         {currentScreen === 'StartScreen' && (
           <StartScreen 
           onRegister={handleRegister} 
@@ -58,8 +58,8 @@ export default function App() {
             phoneNumber={phoneNumber}
           />
         )}
-      </LinearGradient>
-    </SafeAreaView>
+      </SafeAreaView>
+    </LinearGradient>
   );
 }
 
